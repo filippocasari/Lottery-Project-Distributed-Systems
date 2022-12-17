@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <title>Lottery</title>
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
+  </head>
+  <body>
+    <style>
+      h1 {
+        font-family: 'Cursive', sans-serif;
+        font-size: 48px;
+        color: purple;
+        text-align: center;
+        text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+    <style>
+      .authors {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-family: 'Cursive', sans-serif;
+        font-size: 18px;
+        color: purple;
+        text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+    
+    <div class="authors">
+      <h2>@Authors:</h2>
+      <br>
+      Filippo Casari
+      <br>
+      De Grandi Alessandro
+      <br>
+      Timur Taepov
+    </div>
+    <h1>Lottery</h1>
+    <div style="text-align: center;">
+    <button class="enableEthereumButton">Enable Ethereum</button>
+    <h2>Account: <span class="showAccount"></span></h2>
+    <p>Owner: {{ owner }}</p>
+    <p>Identification number: {{ id_number }}</p>
+    <p>Remaining identification numbers: {{ remaining_id_numbers }}</p>
+    
+    <img src="static/Lottery.jpg" alt="lottery" width="600" height="300">
+    
+    <form action="/join_lottery" method="POST">
+      <label>Value (in ether): <input type="text" name="value"></label>
+      <input type="hidden" id="value" name="adress" value="">
+      <button type="submit">Join lottery</button>
+    </form>
+    <form action="/selectWinner" method="POST">
+      <input type="hidden" id="ciao" name="adress" value="">
+      <button type="submit">Select the winner</button>
+    </form>
+    <form action="/balanceCheck" method="GET">
+      <button type="submit">Check the balance</button>
+    </form>
+    <form action="/getIdentificationNumber" method="POST">
+      <input type="hidden" id="boh4" name="adress" value="">
+      <button type="submit">Get id lottery</button>
+    </form>
+    <form action="/participantsInfo" method="GET">
+      <!--<input type="hidden" id="boh3" name="adress" value="">-->
+      <button type="submit">Show Participants</button>
+    </form>
+  </div>
+    <p>{{ message }}</p>
+  </body>
+  <script>
+    if (typeof window.ethereum !== 'undefined') {
+      console.log('MetaMask is installed!');
+    }
+
+    const ethereumButton = document.querySelector('.enableEthereumButton');
+    const showAccount = document.querySelector('.showAccount');
+    const address = document.getElementById("value");
+    const address2 = document.getElementById("ciao");
+
+
+    window.addEventListener('load', () => {
+      getAccount();
+    });
+    ethereumButton.addEventListener('click', () => {
+      getAccount();
+    });
+    
+    async function getAccount() {
+      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+      const account = accounts[0];
+      showAccount.innerHTML = account;
+      address.value = account;
+      address2.value = account;
+    }
+    </script>
+</html>
