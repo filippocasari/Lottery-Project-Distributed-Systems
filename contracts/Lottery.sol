@@ -59,7 +59,7 @@ contract Lottery{
         // If the number of ID is more than 100, the lottery can't be joined
         require(remainingIdentificationNumbers() <= identificationNumberMax, "You can't join the lottery");
         address payable sender =payable (msg.sender);
-        require(isParticipant(sender) == false, "You already are a participant");
+        //require(isParticipant(sender) == false, "You already are a participant");
         participants.push(sender);
         //participants.push(payable(sender)); // Push the address of whoever logged
         

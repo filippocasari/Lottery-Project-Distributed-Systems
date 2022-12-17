@@ -2,14 +2,13 @@ from flask import Flask, render_template, request, jsonify
 from web3 import Web3
 import json
 from hexbytes import HexBytes
-import os
-import logging
-import asyncio
+
 from solcx import compile_source
-import ast
+
 app = Flask(__name__)
 app.config['DEBUG'] = True
-web3 = Web3(Web3.HTTPProvider('http://127.0.0.1:7545'))
+port = 7546
+web3 = Web3(Web3.HTTPProvider(f'http://127.0.0.1:{port}'))
 # compiled_sol = compile_source(
 #      '''// SPDX-License-Identifier: MIT
 # // Final project for Distributed Systems course, Universita della Svizzera italiana
@@ -26,7 +25,7 @@ web3 = Web3(Web3.HTTPProvider('http://127.0.0.1:7545'))
 
 #     uint public identificationNumberMax = 100; // We set this amount to 100 -> this is
 #                                                // a limit
- 
+
 #     uint public minPlayersNum = 1; // Set a minimal amount of players to search for
 #                                    // a winner
 
@@ -45,7 +44,7 @@ web3 = Web3(Web3.HTTPProvider('http://127.0.0.1:7545'))
 
 #     }
 #     function getOwner(
-#     ) public view returns (address) {    
+#     ) public view returns (address) {
 #         return boss;
 #     }
 
@@ -54,7 +53,7 @@ web3 = Web3(Web3.HTTPProvider('http://127.0.0.1:7545'))
 #     // the function is payable because you can literally pass a certain amount of ETH
 #     // and that amount will be stored inside of the contract address. Money are going
 #     // inside to a contract pool
-#     function joinLottery() public payable{ 
+#     function joinLottery() public payable{
 
 #         require(msg.value >= 0.015 ether); // Here we set the minimal amount of money
 #         // which let the user to participate,
@@ -65,7 +64,7 @@ web3 = Web3(Web3.HTTPProvider('http://127.0.0.1:7545'))
 #         address payable sender =payable (msg.sender);
 #         participants.push(sender);
 #         //participants.push(payable(sender)); // Push the address of whoever logged
-        
+
 #         // with a metamask to a players array
 
 #     }
@@ -177,11 +176,8 @@ class HexJsonEncoder(json.JSONEncoder):
         return super().default(obj)
 
 
-
-
-
-with open("../utils/address.txt") as file_a:
-    contract_address = file_a.read()
+import pathlib
+contract_address = pathlib.Path("../utils/address.txt").read_text()
 with open("../utils/abi.json") as file_a:
     abi = file_a.read()
     abi = json.loads(abi)
@@ -196,10 +192,11 @@ bytecode = web3.eth.get_code(contract_address)
 #     print("Contract bytecode:", bytecode)
 contract_instance = web3.eth.contract(address=contract_address, abi=abi)
 
+
 @app.route('/')
 def index():
     remainingIdNumbers = contract_instance.functions.remainingIdentificationNumbers().call()
-    return render_template('index.html', remaining_id_numbers=remainingIdNumbers,owner= contract_instance.functions.getOwner().call(), id_number=contract_instance.functions.getIdentificationNumber().call())
+    return render_template('index.html', remaining_id_numbers=remainingIdNumbers, owner=contract_instance.functions.getOwner().call(), id_number=contract_instance.functions.getIdentificationNumber().call())
 
 
 @app.route('/get_owner', methods=['GET'])
@@ -227,10 +224,14 @@ def get_balance():
 @app.route('/join_lottery', methods=['POST'])
 def join_lottery():
     adress = request.form['adress']
-    value = request.form['value']
+    # request.form['value']
+    #value_in_wei = int(0.016 * 10**18)
     # me = web3.eth.accounts[1]
     sender = Web3.toChecksumAddress(adress)
-    value = web3.toWei(int(value), "ether")
+
+    value = web3.toWei(0.015, "ether")
+
+    print(value)
     txn = {
         "from": sender,
         "value": value,
@@ -240,41 +241,42 @@ def join_lottery():
         tx_receipt = web3.eth.wait_for_transaction_receipt(txn_hash)
         result = contract_instance.functions.participantsInfo().call()
         print(result)
-        
+
         tx_dict = dict(tx_receipt)
 
-        
         return render_template("joinLottery.html", account=tx_dict["from"])
     except Exception as error:
         return str(error)
+
 
 @app.route('/participantsInfo', methods=['GET'])
 def get_participants_info():
     try:
         # Call the contract's participantsInfo() function
-    
+
         result = contract_instance.functions.participantsInfo().call()
-        #print(contract_instance.functions)
+        # print(contract_instance.functions)
         print(type(result))
-        
-        
+
         # Return the result as a JSON object
         return render_template('participants.html', items=result)
     except Exception as error:
         return str(error)
 
+
 @app.route('/balanceCheck', methods=['GET'])
 def balanceCheck():
     try:
         # Call the contract's participantsInfo() function
-    
+
         result = contract_instance.functions.balanceCheck().call()
-        #print(contract_instance.functions)
+        # print(contract_instance.functions)
         print(result)
         # Return the result as a JSON object
         return render_template('safe.html', balance=result)
     except Exception as error:
         return str(error)
+
 
 @app.route('/selectWinner', methods=['POST'])
 def select_winner():
@@ -289,29 +291,29 @@ def select_winner():
         txn_hash = contract_instance.functions.selectWinner().transact(txn)
         tx_receipt = web3.eth.wait_for_transaction_receipt(txn_hash)
         winners = contract_instance.functions.showWinner().call()
-        
+
         return render_template("winner.html", winner=winners[-1], history=winners)
         # Return the transaction receipt as a JSON object
-        
+
     except Exception as error:
         return str(error)
-    
+
+
 @app.route('/getIdentificationNumber', methods=['POST'])
 def getIdentificationNumber():
-    
+
     try:
-        
+
         # Call the contract's selectWinner() function
-        result=contract_instance.functions.getIdentificationNumber().call()
+        result = contract_instance.functions.getIdentificationNumber().call()
         return json.dumps(result, cls=HexJsonEncoder)
         # Return the transaction receipt as a JSON object
-        
-    except Exception as error:
-        return str(error) 
 
+    except Exception as error:
+        return str(error)
 
 
 if __name__ == '__main__':
     from waitress import serve
     serve(app, port=5000)
-    #app.run(port=5000)
+    # app.run(port=5000)

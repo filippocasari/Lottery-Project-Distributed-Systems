@@ -36,7 +36,7 @@
     </div>
     <h1>Lottery</h1>
     <div style="text-align: center;">
-    <button class="enableEthereumButton">Enable Ethereum</button>
+    <!--<button class="enableEthereumButton">Enable Ethereum</button>-->
     <h2>Account: <span class="showAccount"></span></h2>
     <p>Owner: {{ owner }}</p>
     <p>Identification number: {{ id_number }}</p>
@@ -45,9 +45,9 @@
     <img src="static/Lottery.jpg" alt="lottery" width="600" height="300">
     
     <form action="/join_lottery" method="POST">
-      <label>Value (in ether): <input type="text" name="value"></label>
+      <!--<label>Value (in ether): <input type="text" name="value"></label>-->
       <input type="hidden" id="value" name="adress" value="">
-      <button type="submit">Join lottery</button>
+      <button type="submit">Join lottery (price=0.015 ETH)</button>
     </form>
     <form action="/selectWinner" method="POST">
       <input type="hidden" id="ciao" name="adress" value="">
