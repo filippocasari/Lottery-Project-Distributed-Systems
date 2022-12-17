@@ -8,7 +8,7 @@ import asyncio
 from solcx import compile_source
 import ast
 app = Flask(__name__)
-
+app.config['DEBUG'] = True
 web3 = Web3(Web3.HTTPProvider('http://127.0.0.1:7545'))
 # compiled_sol = compile_source(
 #      '''// SPDX-License-Identifier: MIT
@@ -244,7 +244,7 @@ def join_lottery():
         tx_dict = dict(tx_receipt)
 
         
-        return json.dumps(tx_dict, cls=HexJsonEncoder)
+        return render_template("joinLottery.html", account=tx_dict["from"])
     except Exception as error:
         return str(error)
 
@@ -288,9 +288,9 @@ def select_winner():
         # Call the contract's selectWinner() function
         txn_hash = contract_instance.functions.selectWinner().transact(txn)
         tx_receipt = web3.eth.wait_for_transaction_receipt(txn_hash)
-        winner = contract_instance.functions.showWinner().call()
+        winners = contract_instance.functions.showWinner().call()
         
-        return render_template("winner.html", winner=winner)
+        return render_template("winner.html", winner=winners[-1], history=winners)
         # Return the transaction receipt as a JSON object
         
     except Exception as error:
@@ -312,5 +312,6 @@ def getIdentificationNumber():
 
 
 if __name__ == '__main__':
-
-    app.run(port=5000)
+    from waitress import serve
+    serve(app, port=5000)
+    #app.run(port=5000)
