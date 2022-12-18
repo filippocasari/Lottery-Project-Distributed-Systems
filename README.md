@@ -34,7 +34,7 @@ To run the application flask you have to run in "src" dir:
 ```console
 flask run
 ```
-This will start the server @ip:port specified in "src/app.py". 
+This will start the server @ip:port specified in "src/app.py". Note: if you get an error, probably is because port (hard-coded) in app.py is not the same as the port in ganache app.
 
 Now open chrome and paste in the navigation bar:
 ```console
@@ -42,5 +42,4 @@ http://127.0.0.1:5000
 ```
 Note: the port can be set in app.py. 5000 is written by default in app.py script. 
 Now you have to access to your matamask account. You should import your matamask accounts by inserting the private keys of your ganache blockchain. \
-Guidelines: https://www-geeksforgeeks-org.translate.goog/how-to-set-up-ganche-with-metamask/?_x_tr_sl=en&_x_tr_tl=it&_x_tr_hl=it&_x_tr_pto=sc
-
+Guidelines: https://www-geeksforgeeks-org.translate.goog/how-to-set-up-ganche-with-metamask/?_x_tr_sl=en&_x_tr_tl=it&_x_tr_hl=it&_x_tr_pto=sc \
