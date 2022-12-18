@@ -2,7 +2,7 @@
 @authors: Filippo Casari, Alessandro De Grandi, Timur Taepov
 ## Structure & Commands
 ### Brownie
-The project has been initialised by brownie. (do not run this command)
+The project has been initialised by brownie. (*DO NOT* run this command)
 ```python
 brownie init
 ```
