@@ -1,4 +1,4 @@
-# Lottery Project Distributed
+# Lottery Project Distributed System
 @authors: Filippo Casari, Alessandro De Grandi, Timur Taepov
 ## Structure & Commands
 ### Brownie
