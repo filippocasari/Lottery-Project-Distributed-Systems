@@ -34,7 +34,8 @@ To run the application flask you have to run in "src" dir:
 ```console
 flask run
 ```
-This will start the server @ip:port specified in "src/app.py". \ Note: if you get an error, probably is because port (hard-coded) in app.py is not the same as the port in ganache app.
+This will start the server @ip:port specified in "src/app.py". \ 
+Note: if you get an error, probably is because port (hard-coded) in app.py is not the same as the port in ganache app.
 
 Now open chrome and paste in the navigation bar:
 ```console
