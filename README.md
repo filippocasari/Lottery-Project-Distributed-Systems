@@ -30,7 +30,7 @@ Flask has been used for the backend of our server whereas Web3 is a Python libra
 ```shell
 pip install web3 flask
 ```
-To run the application flask you have to run in the root dir:
+To run the application flask you have to run in "src" dir:
 ```console
 flask run
 ```
