@@ -1,4 +1,4 @@
-from brownie import Lottery, accounts
+from brownie import *
 import pytest
 
 # Deploy the contract, and return it. It will be called whenever a test needs it
