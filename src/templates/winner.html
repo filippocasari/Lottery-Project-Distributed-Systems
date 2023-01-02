@@ -1,43 +1,25 @@
-<!--
 <!DOCTYPE html>
 <html>
-<div>
-
-    <h1>Congratulations!</h1>
-    <p>THE WINNER IS {{winner}}</p>
-    <div>
-        <h1>History:</h1>
-      <ul>
-        {% for item in history %}
-        <li>{{ item }}</li>
-        {% endfor %}
-      </ul>
-    </div>
-    <div class="tenor-gif-embed" data-postid="15999195" data-share-method="host" data-aspect-ratio="1" data-width="100%"><a href="https://tenor.com/view/money-cash-hairmoji-bounty-bountystudio-gif-15999195">Money Cash GIF</a>from <a href="https://tenor.com/search/money-gifs">Money GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
-  </div>
-</html>-->
-<!DOCTYPE html>
-<html>
-<head>
-  <title>WINNER</title>
-  <style>
-    body {
-      background-image: url('../static/money-cash.gif');
-      background-size: cover;
-      background-position: center;
-    }
-  </style>
-</head>
-<body>
-  <h1 >Congratulations!</h1>
-    <p >THE WINNER IS {{winner}}</p>
-    <div >
-        <h1>History:</h1>
-      <ul>
-        {% for item in history %}
-        <li>{{ item }}</li>
-        {% endfor %}
-      </ul>
-</body>
+  <head>
+    <title>WINNER</title>
+    <style>
+      body {
+        background-image: url('../static/money-cash.gif');
+        background-size: cover;
+        background-position: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 >Congratulations!</h1>
+      <p >THE WINNER IS {{winner}}</p>
+      <div >
+          <h1>History:</h1>
+        <ul>
+          {% for item in history %}
+          <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+  </body>
 </html>
   

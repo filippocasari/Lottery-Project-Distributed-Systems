@@ -1,22 +1,25 @@
-<style>
-    ul {
-      list-style: circle;
-      font-size: 18px;
-      font-family: Arial, sans-serif;
-      color: blue;
-    }
-    body {
-      background-image: url('https://d13kjxnqnhcmn2.cloudfront.net/AcuCustom/Sitename/DAM/062/donr_lotteries_main.png');
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-    }
-  </style>
-  <div>
-    <h1>Participants:</h1>
-  <ul>
-    {% for item in items %}
-    <li>{{ item }}</li>
-    {% endfor %}
-  </ul>
-</div>
+<!DOCTYPE html>
+<html>
+  <style>
+      ul {
+        list-style: circle;
+        font-size: 18px;
+        font-family: Arial, sans-serif;
+        color: blue;
+      }
+      body {
+        background-image: url('https://d13kjxnqnhcmn2.cloudfront.net/AcuCustom/Sitename/DAM/062/donr_lotteries_main.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+    </style>
+    <div>
+      <h1>Participants:</h1>
+    <ul>
+      {% for item in items %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</html>
