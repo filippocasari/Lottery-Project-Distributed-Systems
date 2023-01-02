@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from web3 import Web3
 import json
 from hexbytes import HexBytes
-
+import pathlib
 # from solcx import compile_source if we wanna compile the contract directly here, instead of using brownie
 
 app = Flask(__name__)
@@ -21,7 +21,7 @@ class HexJsonEncoder(json.JSONEncoder):
         return obj.hex() if isinstance(obj, HexBytes) else super().default(obj)
 
 
-import pathlib
+
 contract_address = pathlib.Path("../utils/address.txt").read_text()
 with open("../utils/abi.json") as file_a:
     abi = file_a.read()
