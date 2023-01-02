@@ -45,6 +45,7 @@ Note: the port can be set in app.py. 5000 is written by default in app.py script
 Now you have to access to your matamask account. You should import your matamask accounts by inserting the private keys of your ganache blockchain. \
 Guidelines: https://www-geeksforgeeks-org.translate.goog/how-to-set-up-ganche-with-metamask/?_x_tr_sl=en&_x_tr_tl=it&_x_tr_hl=it&_x_tr_pto=sc \
 To run the tests:
-```
+```python
 brownie test --network local -v
 ```
+
