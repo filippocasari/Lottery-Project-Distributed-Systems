@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request
 from web3 import Web3
 import json
 from hexbytes import HexBytes
